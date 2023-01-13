@@ -19,19 +19,16 @@ class Initializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) {
+    public void run(String... strings) {
         Stream.of("Seattle JUG", "Denver JUG", "Dublin JUG", "London JUG")
-                .forEach(name ->
-                        repository.save(new Group(name))
-                );
+                .forEach(name -> repository.save(new Group(name))
+        );
 
         Group djug = repository.findByName("Seattle JUG");
-
         Event e = Event.builder().title("Micro Frontends for Java Developers")
-                .description("JHipster now as micro-frontend support!")
+                .description("JHipster now has micro-frontend support!")
                 .date(Instant.parse("2023-01-12T17:00:00.000Z"))
                 .build();
-
         djug.setEvents(Collections.singleton(e));
         repository.save(djug);
 
