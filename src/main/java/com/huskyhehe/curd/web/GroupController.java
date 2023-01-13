@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-public class GroupController {
+class GroupController {
 
     private final Logger log = LoggerFactory.getLogger(GroupController.class);
     private GroupRepository groupRepository;
@@ -45,4 +45,17 @@ public class GroupController {
                 .body(result);
     }
 
+    @PutMapping("/group/{id}")
+    ResponseEntity<Group> updateGroup(@Valid @RequestBody Group group) {
+        log.info("Request to update group: {}", group);
+        Group result = groupRepository.save(group);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @DeleteMapping("/group/{id}")
+    public ResponseEntity<?> deleteGroup(@PathVariable Long id) {
+        log.info("Request to delete group: {}", id);
+        groupRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 }
